@@ -10,11 +10,14 @@ const cardsContainer = page.querySelector('.places__list');
 
 function createCard(cardData, deleteCard) {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+    const cardImage = cardElement.querySelector('.card__image');
+    const cardDeleteButton = cardElement.querySelector('.card__delete-button');
 
-    cardElement.querySelector('.card__image').setAttribute('src', cardData.link);
+    cardImage.src = cardData.link;
+    cardImage.alt = `На изображении ${cardData.name}`;
     cardElement.querySelector('.card__title').textContent = cardData.name;
 
-    cardElement.querySelector('.card__delete-button').addEventListener('click', deleteCard);
+    cardDeleteButton.addEventListener('click', deleteCard);
 
     return cardElement;
 };
