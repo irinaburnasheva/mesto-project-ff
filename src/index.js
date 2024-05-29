@@ -53,9 +53,10 @@ function openCreateCardForm(evt) {
 function createNewCardSubmitHandler(evt) {
   evt.preventDefault();
 
-  const newCard = {};
-  newCard.name = newCardName.value;
-  newCard.link = newCardLink.value;
+  const newCard = {
+    name: newCardName.value,
+    link: newCardLink.value
+  };
 
   cardsContainer.prepend(
     createCard(newCard, deleteCard, likeCard, openCardImage)

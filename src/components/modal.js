@@ -10,13 +10,14 @@ function openModal(element) {
 function closeModal(element) {
   element.classList.remove("popup_is-animated");
   element.classList.remove("popup_is-opened");
+
+  document.removeEventListener("keydown", keyHandler);
+  document.removeEventListener("click", closeButtonHandler);
 }
 
 function keyHandler(evt) {
   if (evt.key === "Escape") {
-    document.querySelectorAll(".popup_is-opened").forEach((item) => {
-      closeModal(item);
-    });
+    closeModal(document.querySelector(".popup_is-opened"));
   }
 }
 
@@ -25,9 +26,7 @@ function closeButtonHandler(evt) {
     evt.target.classList.contains("popup__close") ||
     evt.target.classList.contains("popup_is-opened")
   ) {
-    document.querySelectorAll(".popup_is-opened").forEach((item) => {
-      closeModal(item);
-    });
+    closeModal(document.querySelector(".popup_is-opened"));
   }
 }
 
