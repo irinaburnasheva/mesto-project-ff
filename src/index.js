@@ -2,6 +2,7 @@ import "./pages/index.css";
 import { createCard, deleteCard, likeCard } from "./components/card.js";
 import { openModal, closeModal } from "./components/modal.js";
 import { initialCards } from "./components/cards.js";
+import { validationConfig, enableValidation, clearValidation } from "./components/validation.js";
 
 // DOM узлы
 const page = document.querySelector(".page");
@@ -70,6 +71,8 @@ page.addEventListener("click", openEditProfile);
 page.addEventListener("click", openCreateCardForm);
 editProfileForm.addEventListener("submit", editProfileFormSubmitHandler);
 newCardPopup.addEventListener("submit", createNewCardSubmitHandler);
+
+enableValidation(validationConfig);
 
 //Вывести карточки на страницу
 initialCards.forEach((cardData) => {
