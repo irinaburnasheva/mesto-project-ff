@@ -1,0 +1,12 @@
+.card__like-count {
+    display: none;
+    color: #000;
+    font-size: 13px;
+    line-height: normal;
+    text-align: center;
+}
+
+.card__like-count-visible {
+   display: flex;
+   align-self: center;
+}
