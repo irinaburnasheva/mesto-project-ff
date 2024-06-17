@@ -60,7 +60,9 @@ function likeCard(evt, cardId, likeButton, likeCount) {
       setUnlikeApi(cardId)
         .then((res) => {
           likeCount.classList.remove("card__like-count-visible");
-          likeCount.textContent = res.likes.length;
+          res.likes.length > 0
+            ? (likeCount.textContent = res.likes.length)
+            : (likeCount.textContent = "");
         })
         .catch((err) => console.log(err));
     } else {
