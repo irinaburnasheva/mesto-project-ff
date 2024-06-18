@@ -26,7 +26,7 @@ function createCard(cardData, deleteCard, likeCard, openCardImage, userId) {
     likeCount.textContent = cardData.likes.length;
   }
 
-  if (cardData.likes.find((element) => element["_id"] === userId)) {
+  if (cardData.likes.some((element) => element["_id"] === userId)) {
     likeButton.classList.add("card__like-button_is-active");
   }
 
@@ -54,27 +54,18 @@ function deleteCard(evt, cardId) {
 
 //Функция лайка карточки
 function likeCard(evt, cardId, likeButton, likeCount) {
-  if (evt.target.classList.contains("card__like-button")) {
-    if (likeButton.classList.contains("card__like-button_is-active")) {
+  const likeMethod = likeButton.classList.contains(
+    "card__like-button_is-active"
+  )
+    ? setUnlikeApi
+    : setLikeApi;
+  likeMethod(cardId)
+    .then((res) => {
       evt.target.classList.toggle("card__like-button_is-active");
-      setUnlikeApi(cardId)
-        .then((res) => {
-          likeCount.classList.remove("card__like-count-visible");
-          res.likes.length > 0
-            ? (likeCount.textContent = res.likes.length)
-            : (likeCount.textContent = "");
-        })
-        .catch((err) => console.log(err));
-    } else {
-      evt.target.classList.toggle("card__like-button_is-active");
-      setLikeApi(cardId)
-        .then((res) => {
-          likeCount.classList.add("card__like-count-visible");
-          likeCount.textContent = res.likes.length;
-        })
-        .catch((err) => console.log(err));
-    }
-  }
+      likeCount.classList.toggle("card__like-count-visible", res.likes.length);
+      likeCount.textContent = res.likes.length || "";
+    })
+    .catch((err) => console.log(err));
 }
 
 export { createCard, deleteCard, likeCard };

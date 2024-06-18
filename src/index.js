@@ -2,13 +2,9 @@ import "./pages/index.css";
 import { createCard, deleteCard, likeCard } from "./components/card.js";
 import { openModal, closeModal } from "./components/modal.js";
 import { initialCards } from "./components/cards.js";
+import { enableValidation, clearValidation } from "./components/validation.js";
 import {
-  validationConfig,
-  enableValidation,
-  clearValidation,
-} from "./components/validation.js";
-import {
-  getResponse,
+  handleResponse,
   getUserApi,
   updateUserProfileApi,
   updateUserAvatarApi,
@@ -18,6 +14,16 @@ import {
   setLikeApi,
   setUnlikeApi,
 } from "./components/api.js";
+
+//конфиг для валидации
+const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible",
+};
 
 // Существующие карточки
 const page = document.querySelector(".page");
@@ -156,27 +162,14 @@ enableValidation(validationConfig);
 
 let userId;
 
-getUserApi()
-  .then((res) => {
-    setUserProfile(res);
-    userId = res._id;
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+Promise.all([getUserApi(), getInitialCardsApi()])
+  .then(([userInfo, initialCards]) => {
+    setUserProfile(userInfo);
+    userId = userInfo._id;
 
-getInitialCardsApi()
-  .then((initialCards) => {
-    //Вывести карточки на страницу
     initialCards.forEach((cardData) => {
       cardsContainer.append(
-        createCard(
-          cardData,
-          deleteCard,
-          likeCard,
-          openCardImage,
-          userId
-        )
+        createCard(cardData, deleteCard, likeCard, openCardImage, userId)
       );
     });
   })

@@ -1,12 +1,3 @@
-const validationConfig = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-};
-
 function showInputError(
   formElement,
   inputElement,
@@ -124,8 +115,12 @@ function clearValidation(formElement, validationConfig) {
     validationConfig.submitButtonSelector
   );
 
-  toggleButtonState(inputList, buttonElement, validationConfig.inactiveButtonClass);
-  
+  toggleButtonState(
+    inputList,
+    buttonElement,
+    validationConfig.inactiveButtonClass
+  );
+
   inputList.forEach((inputElement) => {
     hideInputError(
       formElement,
@@ -137,4 +132,4 @@ function clearValidation(formElement, validationConfig) {
   });
 }
 
-export { validationConfig, enableValidation, clearValidation };
+export { enableValidation, clearValidation };

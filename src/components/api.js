@@ -6,18 +6,18 @@ const config = {
   },
 };
 
+export const handleResponse = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка: ${res.status}`);
+}
+
 export const getUserApi = () => {
   return fetch(`${config.baseUrl}/users/me `, {
     method: "GET",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      // если успех, возвращаем ответ в формате json
-      return res.json();
-    }
-    // если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then((res) => handleResponse(res));
 };
 
 //Профиль
@@ -29,14 +29,7 @@ export const updateUserProfileApi = (userName, userAbout) => {
       name: userName,
       about: userAbout,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      // если успех, возвращаем ответ в формате json
-      return res.json();
-    }
-    // если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then((res) => handleResponse(res));
 };
 
 export const updateUserAvatarApi = (avatar) => {
@@ -46,14 +39,7 @@ export const updateUserAvatarApi = (avatar) => {
     body: JSON.stringify({
       avatar: avatar,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      // если успех, возвращаем ответ в формате json
-      return res.json();
-    }
-    // если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then((res) => handleResponse(res));
 };
 
 //Карточки
@@ -61,14 +47,7 @@ export const getInitialCardsApi = () => {
   return fetch(`${config.baseUrl}/cards`, {
     method: "GET",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      // если успех, возвращаем ответ в формате json
-      return res.json();
-    }
-    // если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then((res) => handleResponse(res));
 };
 
 export const createCardApi = (cardName, cardLink) => {
@@ -79,28 +58,14 @@ export const createCardApi = (cardName, cardLink) => {
       name: cardName,
       link: cardLink,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      // если успех, возвращаем ответ в формате json
-      return res.json();
-    }
-    // если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then((res) => handleResponse(res));
 };
 
 export const deleteCardApi = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      // если успех, возвращаем ответ в формате json
-      return res.json();
-    }
-    // если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then((res) => handleResponse(res));
 };
 
 //Лайк
@@ -108,26 +73,12 @@ export const setLikeApi = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "PUT",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      // если успех, возвращаем ответ в формате json
-      return res.json();
-    }
-    // если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then((res) => handleResponse(res));
 };
 
 export const setUnlikeApi = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then((res) => {
-    if (res.ok) {
-      // если успех, возвращаем ответ в формате json
-      return res.json();
-    }
-    // если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then((res) => handleResponse(res));
 };
